@@ -13,4 +13,12 @@ CONTAINER_NAME=tfstate
 az provider register --namespace 'Microsoft.Storage'
 az storage account create --resource-group fastify-hello-world --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
 az storage container create --name tfstate --account-name $STORAGE_ACCOUNT_NAME
+
+terraform init
+terraform apply -var="ssh_user=$USER" -var="source_image_name={{SOURCE_IMAGE_NAME}}"
+terraform destroy -var="ssh_user=$USER" -var="source_image_name={{SOURCE_IMAGE_NAME}}"
+
+pip install pre-commit
+pre-commit --version
+pre-commit install
 ```

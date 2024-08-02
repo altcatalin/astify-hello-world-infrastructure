@@ -4,18 +4,18 @@ variable "resource_group_name" {
   default     = "fastify-hello-world"
 }
 
-variable "admin_username" {
+variable "ssh_user" {
   description = "The username for the Virtual Machine"
   type        = string
 }
 
-variable "admin_ssh_key" {
+variable "ssh_key" {
   description = "The path to the SSH public key used to authenticate the Virtual Machine"
   type        = string
   default     = "~/.ssh/id_rsa.pub"
 }
 
-variable "admin_ssh_allowed_ips" {
+variable "ssh_allowed_ips" {
   description = "The list of IP addresses allowed to connect to the Virtual Machine"
   type        = list(string)
   default     = []

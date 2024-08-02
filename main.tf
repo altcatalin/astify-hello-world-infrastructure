@@ -71,7 +71,7 @@ resource "azurerm_network_security_group" "default" {
   }
 
   dynamic "security_rule" {
-    for_each = var.admin_ssh_allowed_ips
+    for_each = var.ssh_allowed_ips
 
     content {
       access                     = "Allow"
@@ -102,11 +102,11 @@ resource "azurerm_linux_virtual_machine" "this" {
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
   size                = "Standard_B2ats_v2"
-  admin_username      = var.admin_username
+  admin_username      = var.ssh_user
 
   admin_ssh_key {
-    username   = var.admin_username
-    public_key = file(var.admin_ssh_key)
+    username   = var.ssh_user
+    public_key = file(var.ssh_key)
   }
 
   network_interface_ids = [
