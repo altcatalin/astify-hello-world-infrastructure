@@ -1,7 +1,3 @@
-locals {
-  service_port = 3000
-}
-
 data "azurerm_resource_group" "this" {
   name = var.resource_group_name
 }
@@ -64,9 +60,9 @@ resource "azurerm_network_security_group" "default" {
     name                       = "http"
     priority                   = 100
     protocol                   = "Tcp"
-    source_port_range          = local.service_port
+    source_port_range          = var.service_port
     source_address_prefix      = "*"
-    destination_port_range     = local.service_port
+    destination_port_range     = var.service_port
     destination_address_prefix = azurerm_network_interface.public.private_ip_address
   }
 
@@ -120,4 +116,8 @@ resource "azurerm_linux_virtual_machine" "this" {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
+
+  custom_data = base64encode(templatefile("${path.module}/cloud-init.tpl", {
+    service_port = var.service_port,
+  }))
 }

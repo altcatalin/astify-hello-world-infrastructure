@@ -25,3 +25,9 @@ variable "source_image_name" {
   description = "The name of the image used to create the Virtual Machine"
   type        = string
 }
+
+variable "service_port" {
+  description = "The port to be used for the service"
+  type        = number
+  default     = 8080
+}
